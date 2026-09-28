@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ты — моя вселенная ✨</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a14 60%, #000 100%);
+    overflow-x: hidden;
+    font-family: 'Georgia', serif;
+    color: #f0e6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  /* Звёзды */
+  .stars, .stars2, .stars3 {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .stars {
+    background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><circle cx="1" cy="1" r="1" fill="white"/></svg>') repeat;
+    background-size: 200px 200px;
+    animation: moveStars 200s linear infinite;
+    opacity: 0.9;
+  }
+  .stars2 {
+    background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="3" height="3"><circle cx="1.5" cy="1.5" r="1" fill="white"/></svg>') repeat;
+    background-size: 350px 350px;
+    animation: moveStars 150s linear infinite;
+    opacity: 0.7;
+  }
+  .stars3 {
+    background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><circle cx="2" cy="2" r="1" fill="%23ffd1ff"/></svg>') repeat;
+    background-size: 500px 500px;
+    animation: moveStars 100s linear infinite;
+    opacity: 1;
+  }
+
+  @keyframes moveStars {
+    from { background-position: 0 0; }
+    to { background-position: 0 -2000px; }
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    background: rgba(10, 5, 25, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 200, 255, 0.15);
+    border-radius: 28px;
+    padding: 50px 35px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7),
+                0 0 80px rgba(150, 100, 255, 0.15);
+  }
+
+  .moon {
+    font-size: 5em;
+    display: inline-block;
+    filter: drop-shadow(0 0 30px rgba(255, 220, 150, 0.9));
+    animation: glow 3s ease-in-out infinite;
+    margin-bottom: 20px;
+  }
+
+  @keyframes glow {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 220, 150, 0.7)); }
+    50% { filter: drop-shadow(0 0 50px rgba(255, 220, 150, 1)); }
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 25px;
+    background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #ff9a9e);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shine 6s linear infinite;
+    letter-spacing: 2px;
+    font-weight: bold;
+  }
+
+  @keyframes shine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  #typed {
+    font-size: 1.25em;
+    line-height: 2;
+    min-height: 120px;
+    font-style: italic;
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(200, 150, 255, 0.8),
+                 0 2px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    background: #fff;
+    margin-left: 3px;
+    animation: blink 0.7s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .constellation {
+    margin: 40px auto 20px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+
+  .star-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(30, 20, 50, 0.85);
+    border: 1px solid rgba(255, 180, 230, 0.4);
+    color: #ffe4ff;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: all 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .star-btn:hover {
+    background: rgba(120, 60, 150, 0.7);
+    border-color: rgba(255, 200, 240, 0.9);
+    box-shadow: 0 0 30px rgba(255, 150, 200, 0.9);
+    transform: scale(1.15) rotate(15deg);
+  }
+
+  .star-btn.active {
+    background: linear-gradient(45deg, #ff6b9d, #a18cd1);
+    border-color: #fff;
+    box-shadow: 0 0 40px rgba(255, 150, 200, 1);
+    transform: scale(1.2);
+  }
+
+  #secretMsg {
+    margin-top: 25px;
+    font-size: 1.15em;
+    min-height: 30px;
+    color: #ffffff;
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 0.6s;
+    text-shadow: 0 0 15px rgba(255, 150, 220, 1),
+                 0 2px 6px rgba(0, 0, 0, 0.9);
+    font-weight: 500;
+  }
+
+  #secretMsg.show { opacity: 1; }
+
+  /* === Кнопка "Прочитать стих" === */
+  .poem-section {
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .poem-btn {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 28px;
+    font-size: 1.05em;
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(120, 60, 150, 0.5), rgba(255, 100, 150, 0.4));
+    border: 1px solid rgba(255, 180, 230, 0.5);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 8px 25px rgba(150, 80, 200, 0.3);
+  }
+
+  .poem-btn:hover {
+    background: linear-gradient(135deg, rgba(150, 80, 190, 0.75), rgba(255, 120, 170, 0.65));
+    border-color: rgba(255, 200, 240, 1);
+    box-shadow: 0 12px 35px rgba(255, 130, 190, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .poem-icon { font-size: 1.2em; }
+
+  .poem-arrow {
+    display: inline-block;
+    transition: transform 0.4s ease;
+    font-size: 1.1em;
+  }
+
+  .poem-btn.open .poem-arrow {
+    transform: rotate(180deg);
+  }
+
+  /* === Раскрывающийся блок со стихом === */
+  .poem-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1.5s ease, margin-top 0.6s ease;
+    margin-top: 0;
+  }
+
+  .poem-wrapper.open {
+    max-height: 1200px;
+    margin-top: 30px;
+  }
+
+  .poem {
+    padding: 35px 25px;
+    background: rgba(15, 8, 30, 0.7);
+    border: 1px solid rgba(255, 200, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: inset 0 0 40px rgba(150, 80, 200, 0.15),
+                0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .poem-stanza {
+    margin-bottom: 22px;
+  }
+
+  .poem-stanza:last-child {
+    margin-bottom: 0;
+  }
+
+  .poem-line {
+    font-size: 1.1em;
+    line-height: 1.9;
+    color: #f5eaff;
+    font-style: italic;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    text-shadow: 0 0 10px rgba(200, 150, 255, 0.4),
+                 0 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Разделитель между строфами */
+  .poem-divider {
+    text-align: center;
+    color: rgba(255, 180, 230, 0.6);
+    letter-spacing: 8px;
+    margin: 18px 0;
+    font-size: 0.9em;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    text-shadow: 0 0 10px rgba(255, 150, 220, 0.6);
+  }
+
+  .poem-wrapper.open .poem-line {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .poem-wrapper.open .poem-divider {
+    opacity: 1;
+  }
+
+  /* Задержки для появления строк по одной */
+  .poem-wrapper.open .poem-line:nth-child(1)  { transition-delay: 0.1s; }
+  .poem-wrapper.open .poem-line:nth-child(2)  { transition-delay: 0.2s; }
+  .poem-wrapper.open .poem-line:nth-child(3)  { transition-delay: 0.3s; }
+  .poem-wrapper.open .poem-line:nth-child(4)  { transition-delay: 0.4s; }
+  .poem-wrapper.open .poem-line:nth-child(5)  { transition-delay: 0.5s; }
+  .poem-wrapper.open .poem-line:nth-child(6)  { transition-delay: 0.6s; }
+  .poem-wrapper.open .poem-line:nth-child(7)  { transition-delay: 0.7s; }
+  .poem-wrapper.open .poem-line:nth-child(8)  { transition-delay: 0.8s; }
+  .poem-wrapper.open .poem-line:nth-child(9)  { transition-delay: 0.95s; }
+  .poem-wrapper.open .poem-line:nth-child(10) { transition-delay: 1.05s; }
+  .poem-wrapper.open .poem-line:nth-child(11) { transition-delay: 1.15s; }
+  .poem-wrapper.open .poem-line:nth-child(12) { transition-delay: 1.25s; }
+  .poem-wrapper.open .poem-line:nth-child(13) { transition-delay: 1.35s; }
+  .poem-wrapper.open .poem-line:nth-child(14) { transition-delay: 1.45s; }
+  .poem-wrapper.open .poem-line:nth-child(15) { transition-delay: 1.6s; }
+  .poem-wrapper.open .poem-line:nth-child(16) { transition-delay: 1.7s; }
+  .poem-wrapper.open .poem-line:nth-child(17) { transition-delay: 1.8s; }
+  .poem-wrapper.open .poem-line:nth-child(18) { transition-delay: 1.9s; }
+  .poem-wrapper.open .poem-line:nth-child(19) { transition-delay: 2.0s; }
+
+  .footer {
+    margin-top: 40px;
+    font-size: 0.95em;
+    color: #d8c8e8;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Падающие звёзды */
+  .shooting-star {
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px white, 0 0 20px 4px rgba(255, 200, 255, 0.8);
+    animation: shoot 3s linear forwards;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .shooting-star::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, white, transparent);
+    transform: translateX(-100px);
+  }
+
+  @keyframes shoot {
+    0% { transform: translate(0, 0) rotate(-45deg); opacity: 1; }
+    100% { transform: translate(300px, 300px) rotate(-45deg); opacity: 0; }
+  }
+
+  /* Мобильная адаптация */
+  @media (max-width: 600px) {
+    .container { padding: 35px 20px; }
+    h1 { font-size: 1.8em; }
+    .moon { font-size: 3.5em; }
+    #typed { font-size: 1.05em; min-height: 100px; }
+    .star-btn { width: 50px; height: 50px; font-size: 1.2em; }
+    .poem { padding: 25px 18px; }
+    .poem-line { font-size: 1em; line-height: 1.8; }
+    .poem-btn { font-size: 0.95em; padding: 14px 22px; }
+    .constellation { gap: 15px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
+  <div class="container">
+    <div class="moon">🌙</div>
+    <h1>Ты — моя вселенная</h1>
+    <div id="typed"><span class="cursor">&nbsp;</span></div>
+
+    <div class="constellation">
+      <button class="star-btn" onclick="revealStar(this, 'Ты — моё самое яркое созвездие ⭐')">⭐</button>
+      <button class="star-btn" onclick="revealStar(this, 'С тобой я нашёл свою орбиту 🌍')">✨</button>
+      <button class="star-btn" onclick="revealStar(this, 'Ты освещаешь даже самую тёмную ночь 🌌')">💫</button>
+      <button class="star-btn" onclick="revealStar(this, 'Моё сердце бьётся в ритме твоём 💓')">🌟</button>
+    </div>
+
+    <div id="secretMsg"></div>
+
+    <!-- === Стих === -->
+    <div class="poem-section">
+      <button class="poem-btn" onclick="togglePoem(this)">
+        <span class="poem-icon">📖</span>
+        <span class="poem-label">Прочитать стих для тебя</span>
+        <span class="poem-arrow">▾</span>
+      </button>
+
+      <div class="poem-wrapper" id="poemWrapper">
+        <div class="poem">
+
+          <div class="poem-stanza">
+            <div class="poem-line">Среди тысяч звёзд,</div>
+            <div class="poem-line">Сквозь туманы вселенной</div>
+            <div class="poem-line">Открылся мне путь,</div>
+            <div class="poem-line">Что был скрыт от меня.</div>
+            <div class="poem-line">Ты светишь мне днём,</div>
+            <div class="poem-line">Ты светишь мне ночью,</div>
+            <div class="poem-line">И чувства, что в сердце,</div>
+            <div class="poem-line">Пылают, храня.</div>
+          </div>
+
+          <div class="poem-divider">✦ ✦ ✦</div>
+
+          <div class="poem-stanza">
+            <div class="poem-line">Пусть каждый твой день,</div>
+            <div class="poem-line">И каждый мой день</div>
+            <div class="poem-line">Наполнятся яркою краской —</div>
+            <div class="poem-line">Не той, что тускнеет от грязи,</div>
+            <div class="poem-line">А той, что горит у тебя</div>
+            <div class="poem-line">У меня.</div>
+          </div>
+
+          <div class="poem-divider">✦ ✦ ✦</div>
+
+          <div class="poem-stanza">
+            <div class="poem-line">Сквозь тернии, сквозь сомненья,</div>
+            <div class="poem-line">Сквозь страх и сожаленья</div>
+            <div class="poem-line">Мы вместе идём —</div>
+            <div class="poem-line">Для тебя, для меня.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">Написано звёздами для тебя 💜</div>
+  </div>
+
+<script>
+  // === Печатающийся текст ===
+  const text = "Среди миллиардов звёзд я нашёл самую яркую. Она светит для меня каждый день — и это ты.";
+  const el = document.getElementById('typed');
+  const cursor = document.querySelector('.cursor');
+  let i = 0;
+
+  function type() {
+    if (i < text.length) {
+      cursor.insertAdjacentText('beforebegin', text.charAt(i));
+      i++;
+      setTimeout(type, 60);
+    }
+  }
+  setTimeout(type, 1000);
+
+  // === Секретные сообщения ===
+  const msgEl = document.getElementById('secretMsg');
+  let hideTimer;
+  function revealStar(btn, msg) {
+    document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    msgEl.textContent = msg;
+    msgEl.classList.add('show');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      msgEl.classList.remove('show');
+      btn.classList.remove('active');
+    }, 4000);
+  }
+
+  // === Раскрытие стиха ===
+  function togglePoem(btn) {
+    const wrapper = document.getElementById('poemWrapper');
+    const isOpen = wrapper.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+
+    const label = btn.querySelector('.poem-label');
+    label.textContent = isOpen ? 'Свернуть стих' : 'Прочитать стих для тебя';
+
+    if (isOpen) {
+      setTimeout(() => {
+        wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 300);
+    }
+  }
+
+  // === Падающие звёзды ===
+  function shootingStar() {
+    const s = document.createElement('div');
+    s.className = 'shooting-star';
+    s.style.top = Math.random() * 50 + 'vh';
+    s.style.left = Math.random() * 50 + 'vw';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 3000);
+  }
+  setInterval(() => {
+    if (Math.random() > 0.5) shootingStar();
+  }, 2500);
+
+  // === Клик по фону = новая падающая звезда ===
+  document.body.addEventListener('click', (e) => {
+    if (e.target.classList.contains('star-btn') ||
+        e.target.classList.contains('poem-btn') ||
+        e.target.closest('.poem-btn')) return;
+    const s = document.createElement('div');
+    s.className = 'shooting-star';
+    s.style.top = e.clientY + 'px';
+    s.style.left = e.clientX + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 3000);
+  });
+</script>
+</body>
+</html>
